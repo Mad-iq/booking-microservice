@@ -8,8 +8,10 @@ import lombok.Data;
 public class PassengerRequest {
     @NotBlank
     private String name;
+    
     @NotBlank
     private String gender;
+    
     @Min(1)
     private int age;
 }

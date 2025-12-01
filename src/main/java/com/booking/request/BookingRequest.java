@@ -25,7 +25,7 @@ public class BookingRequest {
     private List<PassengerRequest> passengers;
 
     @NotBlank
-    private String mealPreference; // keep as string or map to enum if needed
+    private String mealPreference; 
 
     @NotEmpty
     private List<String> seatNumbers;
