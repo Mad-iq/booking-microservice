@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQConfig {
+public class RabbitConfig {
 
     public static final String EXCHANGE = "booking.exchange";
     public static final String ROUTING_KEY = "booking.confirmed";
