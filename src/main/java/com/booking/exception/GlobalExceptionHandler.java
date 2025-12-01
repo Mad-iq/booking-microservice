@@ -48,9 +48,6 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.BAD_REQUEST, ex.getMessage(), req);
     }
 
-    // -------------------------
-    // Everything else
-    // -------------------------
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGeneric(Exception ex, WebRequest req) {
         ex.printStackTrace();
