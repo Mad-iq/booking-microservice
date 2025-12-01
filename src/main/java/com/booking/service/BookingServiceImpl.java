@@ -14,6 +14,7 @@ import com.booking.feign.FeignInterface;
 import com.booking.model.Booking;
 import com.booking.model.BookingStatus;
 import com.booking.model.Passenger;
+import com.booking.publisher.EmailPublisher;
 import com.booking.repositories.BookingRepository;
 import com.booking.request.BookingRequest;
 import com.booking.request.PassengerRequest;
@@ -27,6 +28,8 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepo;
     private final FeignInterface flightClient;
+    private final EmailPublisher emailPublisher;
+
 
     //circuitbreaker stuff
 
@@ -169,6 +172,18 @@ public class BookingServiceImpl implements BookingService {
         booking.setSeatNumbers(req.getSeatNumbers());
 
         bookingRepo.save(booking);
+        try {
+            com.booking.events.EmailPayload payload = new com.booking.events.EmailPayload(
+                booking.getEmail(),
+                booking.getName(),
+                booking.getPnr(),
+                booking.getFlightId()
+            );
+            emailPublisher.publishEmailEvent(payload);
+        } catch (Exception e) {
+            System.err.println("Failed to publish email event: " + e.getMessage());
+        }
+
 
         return Map.of(
                 "pnr", booking.getPnr(),
